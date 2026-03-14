@@ -6,17 +6,36 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Req,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { CreateProductDto } from './dto/create-product.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth-guard';
+import { Request } from 'express';
+
+interface RequestWithUser extends Request {
+  user: {
+    sub: string;
+    email: string;
+  };
+}
+
+@UseGuards(JwtAuthGuard)
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  create(@Body() createData: CreateProductDto) {
-    return this.productsService.create(createData);
+  create(
+    @Body() createData: CreateProductDto,
+    @Req() request: RequestWithUser,
+  ) {
+    const userId = request.user.sub;
+
+    return this.productsService.create(createData, userId);
   }
 
   @Get()
@@ -26,16 +45,16 @@ export class ProductsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+    return this.productsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateData: UpdateProductDto) {
-    return this.productsService.update(+id, updateData);
+    return this.productsService.update(id, updateData);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.productsService.remove(id);
   }
 }
