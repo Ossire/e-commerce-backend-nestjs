@@ -20,15 +20,30 @@ export class Product {
   @Column()
   description: string;
 
-  @Column('decimal')
+  @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
-  @ManyToOne(() => User, (user) => user.products)
-  owner: User;
+  @Column()
+  category: string;
+
+  @Column()
+  imageUrl: string;
+
+  @Column({ default: true })
+  inStock: boolean;
+
+  @Column('decimal', { precision: 10, scale: 2 })
+  rating: number;
+
+  @Column({ type: 'jsonb', nullable: true })
+  properties: { color: string; weight: string }[];
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToOne(() => User, (user) => user.products)
+  owner: User;
 }

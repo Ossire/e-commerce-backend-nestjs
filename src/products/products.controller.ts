@@ -23,11 +23,10 @@ interface RequestWithUser extends Request {
   };
 }
 
-@UseGuards(JwtAuthGuard)
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
-
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(
     @Body() createData: CreateProductDto,
@@ -48,11 +47,13 @@ export class ProductsController {
     return this.productsService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateData: UpdateProductDto) {
     return this.productsService.update(id, updateData);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.productsService.remove(id);
