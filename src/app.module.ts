@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/entities/user.entity';
 
 import { ProductsModule } from './products/products.module';
 
 import { UsersModule } from './users/users.module';
 import { AuthenModule } from './authen/authe.module';
-import { Product } from './products/entities/product.entity';
+
+import { CategoriesModule } from './categories/categories.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -21,13 +21,14 @@ import { Product } from './products/entities/product.entity';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
-        entities: [User, Product],
+        autoLoadEntities: true,
         synchronize: true,
       }),
     }),
     UsersModule,
     AuthenModule,
     ProductsModule,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [],

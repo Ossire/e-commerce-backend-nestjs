@@ -35,9 +35,9 @@ export class CreateProductDto {
   @IsNotEmpty()
   description: string;
 
-  @IsString()
   @IsNotEmpty()
-  category: string;
+  @IsNumber()
+  categoryId: number;
 
   @IsUrl()
   imageUrl: string;

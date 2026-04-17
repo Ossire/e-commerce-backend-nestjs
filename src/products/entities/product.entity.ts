@@ -5,9 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 import { User } from 'src/users/entities/user.entity';
+import { Category } from 'src/categories/entities/category.entity';
 
 @Entity('products')
 export class Product {
@@ -22,9 +24,6 @@ export class Product {
 
   @Column('decimal', { precision: 10, scale: 2 })
   price: number;
-
-  @Column()
-  category: string;
 
   @Column()
   imageUrl: string;
@@ -46,4 +45,11 @@ export class Product {
 
   @ManyToOne(() => User, (user) => user.products)
   owner: User;
+
+  @Column()
+  categoryId: number;
+
+  @ManyToOne(() => Category, (category) => category.products)
+  @JoinColumn({ name: 'categoryId' })
+  category: Category;
 }

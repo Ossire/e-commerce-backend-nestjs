@@ -4,20 +4,34 @@ import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { Category } from 'src/categories/entities/category.entity';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private readonly productRepo: Repository<Product>,
+    @InjectRepository(Category)
+    private readonly categoryRepo: Repository<Category>,
   ) {}
 
   async create(
     createProductDto: CreateProductDto,
     userId: string,
   ): Promise<Product> {
+    const category = await this.categoryRepo.findOne({
+      where: { id: createProductDto.categoryId },
+    });
+    if (!category) {
+      throw new NotFoundException(
+        `Category ID ${createProductDto.categoryId} not found`,
+      );
+    }
+
+    const { categoryId, ...productData } = createProductDto;
     const newProduct = this.productRepo.create({
-      ...createProductDto,
+      ...productData,
+      category: { id: categoryId },
       owner: { id: userId },
     });
 
