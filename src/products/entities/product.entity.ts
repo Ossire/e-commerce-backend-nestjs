@@ -31,7 +31,7 @@ export class Product {
   @Column({ default: true })
   inStock: boolean;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column({ type: 'decimal', default: 0 })
   rating: number;
 
   @Column({ type: 'jsonb', nullable: true })
