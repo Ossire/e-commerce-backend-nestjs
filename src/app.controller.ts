@@ -7,6 +7,11 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    return this.appService.getHello();
+    return {
+      status: 'success',
+      message: 'E-Commerce Backend API is running perfectly!',
+      version: '1.0.0',
+      endpoints: 'Please append /api/v1 to the URL to access the data.',
+    };
   }
 }

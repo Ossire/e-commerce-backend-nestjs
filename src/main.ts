@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { RequestMethod, ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './common/filters/exception-filter';
 
 async function bootstrap() {
@@ -17,7 +17,9 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Accept, Authorization',
   });
 
-  app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix('api/v1', {
+    exclude: [{ path: '/', method: RequestMethod.GET }],
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
