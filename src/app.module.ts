@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { AuthenModule } from './authen/authe.module';
 
 import { CategoriesModule } from './categories/categories.module';
+import { AppController } from './app.controller';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -34,7 +35,7 @@ import { CategoriesModule } from './categories/categories.module';
     ProductsModule,
     CategoriesModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}
