@@ -9,7 +9,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.enableCors({
     origin: [
-      'https://effervescent-mermaid-5fd69f.netlify.app/signup',
+      'https://effervescent-mermaid-5fd69f.netlify.app',
       'http://localhost:4200',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
