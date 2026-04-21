@@ -8,7 +8,7 @@ async function bootstrap() {
 
   app.useGlobalFilters(new HttpExceptionFilter());
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: 'https://e-commerce-angular-frontend.onrender.com/',
     Credentials: true,
   });
 
