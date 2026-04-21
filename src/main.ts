@@ -8,9 +8,10 @@ async function bootstrap() {
 
   app.useGlobalFilters(new HttpExceptionFilter());
   app.enableCors({
-    origin: 'https://e-commerce-angular-frontend.onrender.com',
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    Credentials: true,
+    preFlightContinue: false,
+    optionsSucessStatus: 204,
   });
 
   app.setGlobalPrefix('api/v1');
